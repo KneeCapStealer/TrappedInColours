@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
+[DisallowMultipleComponent]
 public class PaintableObject : MonoBehaviour
 {
     public Color Color { private set; get; }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Collider))]
+[DisallowMultipleComponent]
 public class PaintableDoor : MonoBehaviour
 {
     [SerializeField]
