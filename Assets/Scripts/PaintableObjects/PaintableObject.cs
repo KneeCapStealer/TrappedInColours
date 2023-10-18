@@ -14,8 +14,6 @@ public class PaintableObject : MonoBehaviour
         mat = GetComponent<Renderer>().material;
 
         Color = mat.GetColor("_BaseColor");
-
-        GameManager.Instance.PaintThing += Paint;
     }
 
     public void Paint(Color color)

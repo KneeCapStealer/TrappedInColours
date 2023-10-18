@@ -21,6 +21,6 @@ public class PaintableRoom : MonoBehaviour
             obj.Paint(color);
 
         foreach (PaintableDoor door in roomDoors)
-            door.PaintFrame(color);
+            door.PaintFrame(this, color);
     }
 }

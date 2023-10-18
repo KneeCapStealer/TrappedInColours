@@ -28,11 +28,16 @@ public class PaintableDoor : MonoBehaviour
         GameManager.Instance.OnPaint += CheckDoorIsOpen;
     }
 
-    public void PaintFrame(Color color)
+    public void PaintFrame(PaintableRoom room, Color color)
     {
         foreach (RoomFramePair pair in roomFramePairs)
-            foreach (PaintableObject frame in pair.frameObjects)
-                frame.Paint(doorColor);
+        {
+            if (pair.room == room)
+            {
+                foreach (PaintableObject frame in pair.frameObjects)
+                    frame.Paint(doorColor);
+            }
+        }
     }
 
     void CheckDoorIsOpen()
