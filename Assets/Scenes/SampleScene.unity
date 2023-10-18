@@ -749,6 +749,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3617192050909035755, guid: f41290c7ff6aec347bcc8b0704f9b483,
+        type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3617192050909035755, guid: f41290c7ff6aec347bcc8b0704f9b483,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3617192050909035755, guid: f41290c7ff6aec347bcc8b0704f9b483,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 3840866675710414445, guid: f41290c7ff6aec347bcc8b0704f9b483,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -803,6 +818,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754556840002663160, guid: f41290c7ff6aec347bcc8b0704f9b483,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754556840002663160, guid: f41290c7ff6aec347bcc8b0704f9b483,
+        type: 3}
+      propertyPath: mouseSensitivity
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8088916501900740244, guid: f41290c7ff6aec347bcc8b0704f9b483,
         type: 3}
