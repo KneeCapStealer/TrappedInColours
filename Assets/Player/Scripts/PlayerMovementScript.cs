@@ -13,6 +13,7 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 1f; 
     private float turner;
     private float looker;
+    private float cameraAngle = 0f;
 
     [SerializeField] private Camera playerCamera;
     private Rigidbody rb;
@@ -34,21 +35,25 @@ public class PlayerMovementScript : MonoBehaviour
         }
         if (looker != 0)
         {
-            playerCamera.transform.eulerAngles += new Vector3(looker, 0, 0); 
-            Vector3 localEulerAngles = playerCamera.transform.eulerAngles;
-            localEulerAngles.x = ModularClamp(localEulerAngles.x, -70, 100);
-            playerCamera.transform.eulerAngles = localEulerAngles;
+            cameraAngle += looker * mouseSensitivity;
+            cameraAngle = Mathf.Clamp(cameraAngle, -70, 70);
+            playerCamera.transform.localRotation = Quaternion.Euler(cameraAngle, 0, 0);
         }
 
         Vector2 moveVec = move.action.ReadValue<Vector2>();
         rb.AddRelativeForce(new Vector3(moveVec.x, 0, moveVec.y) * movementSpeed * Time.deltaTime);
     }
 
-    private float ModularClamp(float val, float min, float max, float rangemin = -180f, float rangemax = 180f)
+    private float ModularClamp(float val, float min, float max, float rangemin = 0f, float rangemax = 360f)
     {
         var modulus = Mathf.Abs(rangemax - rangemin);
         if ((val %= modulus) < 0f) val += modulus;
         return Mathf.Clamp(val + Mathf.Min(rangemin, rangemax), min, max);
+    }
+
+    private float NormalizeAngle(float a)
+    {
+        return a - 180f * Mathf.Floor((a + 180f) / 180f);
     }
 
 }
