@@ -19,17 +19,29 @@ public class Painter : MonoBehaviour
     [Header("Color Selection")]
     [SerializeField] private Color[] validColors;
     [SerializeField] private Renderer brushRenderer;
+    private Vector3 brushInitPosition;
     private int selectedColorIndex = 0;
 
     void Start()
     {
         playerCamera = Camera.main.transform;
+        brushRenderer.material.SetColor("_BaseColor", validColors[selectedColorIndex]);
+        brushInitPosition = brushRenderer.gameObject.transform.localPosition;
     }
 
     void Update()
     {
         ShootLePaint();
         ChangeColor();
+
+        Vector3 bPos = brushRenderer.gameObject.transform.localPosition;
+
+        if (Mathf.Abs(bPos.x - brushInitPosition.x) > Mathf.Epsilon ||
+            Mathf.Abs(bPos.y - brushInitPosition.y) > Mathf.Epsilon ||
+            Mathf.Abs(bPos.z - brushInitPosition.z) > Mathf.Epsilon)
+        {
+            brushRenderer.gameObject.transform.localPosition = Vector3.Lerp(bPos, brushInitPosition, Time.deltaTime);
+        }
     }
 
     private void ShootLePaint()
@@ -40,6 +52,8 @@ public class Painter : MonoBehaviour
             ThrowPaint(validColors[selectedColorIndex]);
             remainingCooldown = paintCooldown;
             GameManager.Instance.OnPaint.Invoke();
+            brushRenderer.gameObject.transform.localPosition += new Vector3(-0.05f, 0.01f, 0.1f);
+
         }
         else
             remainingCooldown -= Time.deltaTime;
@@ -60,6 +74,7 @@ public class Painter : MonoBehaviour
         selectedColorIndex = (validColors.Length + selectedColorIndex) % validColors.Length;
 
         brushRenderer.material.SetColor("_BaseColor", validColors[selectedColorIndex]);
+        brushRenderer.gameObject.transform.localPosition += new Vector3(0.02f, 0.05f, 0.02f);
     }
 
     Vector3 paintDirection => Quaternion.AngleAxis(-(paintSpread / 2), Vector3.up) * playerCamera.forward;
