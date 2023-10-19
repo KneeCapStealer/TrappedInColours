@@ -1,25 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Painter : MonoBehaviour
 {
-    [SerializeField] private Transform paintBrush;
     public LayerMask PaintableLayer;
 
-    [Space]
+    [Header("Painting")]
     [SerializeField] private int paintSpread;
     [SerializeField] private float paintDistance;
     [SerializeField] private float paintCooldown;
 
     private float remainingCooldown = 0;
 
+    private Transform playerCamera;
+
+    [Header("Color Selection")]
+    [SerializeField] private Color[] validColors;
+    [SerializeField] private Renderer brushRenderer;
+    private int selectedColorIndex = 0;
+
+    void Start()
+    {
+        playerCamera = Camera.main.transform;
+    }
+
     void Update()
+    {
+        ShootLePaint();
+        ChangeColor();
+    }
+
+    private void ShootLePaint()
     {
         // Shoot le paint
         if (Input.GetMouseButton(0) && remainingCooldown <= 0)
         {
-            ThrowPaint(Color.white);
+            ThrowPaint(validColors[selectedColorIndex]);
             remainingCooldown = paintCooldown;
             GameManager.Instance.OnPaint.Invoke();
         }
@@ -27,7 +45,24 @@ public class Painter : MonoBehaviour
             remainingCooldown -= Time.deltaTime;
     }
 
-    Vector3 paintDirection => Quaternion.AngleAxis(-(paintSpread / 2), Vector3.up) * paintBrush.forward;
+    private void ChangeColor()
+    {
+        int delta = 0;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            delta += 1;
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            delta -= 1;
+
+        if (delta == 0)
+            return;
+
+        selectedColorIndex += delta;
+        selectedColorIndex = (validColors.Length + selectedColorIndex) % validColors.Length;
+
+        brushRenderer.material.SetColor("_BaseColor", validColors[selectedColorIndex]);
+    }
+
+    Vector3 paintDirection => Quaternion.AngleAxis(-(paintSpread / 2), Vector3.up) * playerCamera.forward;
     public void ThrowPaint(Color color)
     {
         HashSet<RaycastHit> hits = new HashSet<RaycastHit>();
@@ -37,13 +72,13 @@ public class Painter : MonoBehaviour
             RaycastHit hit;
             Vector3 castDirection = Quaternion.AngleAxis(i, Vector3.up) * paintDirection;
 
-            if (Physics.Raycast(paintBrush.position, castDirection, out hit, paintDistance, PaintableLayer.value))
+            if (Physics.Raycast(playerCamera.position, castDirection, out hit, paintDistance, PaintableLayer.value))
             {
                 hits.Add(hit);
             }
 
-            Debug.DrawLine(paintBrush.position,
-                paintBrush.position + paintDistance * castDirection,
+            Debug.DrawLine(playerCamera.position,
+                playerCamera.position + paintDistance * castDirection,
                 Color.green,
                 2);
         }
