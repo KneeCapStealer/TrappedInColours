@@ -20,7 +20,7 @@ public class PaintableDoor : MonoBehaviour
     
     void Start()
     {
-        doorCollider = GetComponent<Collider>();
+        doorCollider = GetComponent<BoxCollider>();
         doorRenderer = GetComponent<Renderer>();
 
         doorRenderer.material.SetColor("_BaseColor", Color.white);

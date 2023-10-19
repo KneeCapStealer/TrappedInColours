@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Renderer), typeof(Collider))]
 [DisallowMultipleComponent]
 public class PaintableObject : MonoBehaviour
 {

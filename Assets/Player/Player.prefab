@@ -188,10 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ebddd8d338ec24f9aae7a26c48eaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 5000
   move: {fileID: 1364160343707798727, guid: 3cd06f5db8c32514d8f37ef966a2560f, type: 3}
-  mouseSensitivity: 1
-  playerCamera: {fileID: 0}
+  mouseSensitivity: 3
+  playerCamera: {fileID: 9089609309986625520}
 --- !u!114 &7517370225336728478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,10 +207,10 @@ MonoBehaviour:
   paintBrush: {fileID: 8088916501900740244}
   PaintableLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   paintSpread: 40
   paintDistance: 50
-  paintCooldown: 0
+  paintCooldown: 0.5
 --- !u!136 &5051211258133186275
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ Rigidbody:
   m_GameObject: {fileID: 3907838696862239202}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -259,7 +259,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &6485873879795671614
 GameObject:
